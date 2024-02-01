@@ -10,7 +10,7 @@ public class PhoneBook {
     }
 
     public String welcomePage() {
-        return "\nPHONEBOOK\n1. Save a contact\n2. View Saved Contacts\n3. Search Saved Contacts\n4. Exit";
+        return "\nPHONEBOOK\n1. Save a contact\n2. View Saved Contacts\n3. Search Saved Contacts\n4. Delete a contact\n5. Exit";
     }
 
     public void createContact(String name, String number) {
@@ -23,7 +23,7 @@ public class PhoneBook {
             System.out.println("There are no saved contacts!!!");
         } else {
             for (int index = 0; index < names.size(); index++) {
-                System.out.println("Name: " + names.get(index) + "\t\tNumber: " + numbers.get(index));
+                System.out.println((index+1) + " Name: " + names.get(index) + "\t\tNumber: " + numbers.get(index));
             }
         }
     }
@@ -31,7 +31,7 @@ public class PhoneBook {
     public void searchContactsByName(String search){
         boolean isInContact = false;
 
-        for (int index = 0; index<names.size(); index++){
+        for (int index = 0; index< names.size(); index++){
             if (search.equalsIgnoreCase(names.get(index))){
                 System.out.println("Name: " + names.get(index) + "\t\tNumber: " + numbers.get(index));
                 isInContact = true;
@@ -43,10 +43,11 @@ public class PhoneBook {
         }
     }
 
+
     public void searchContactByNumber(String search) {
         boolean isInContact = false;
 
-        for (int index = 0; index<numbers.size(); index++){
+        for (int index = 0; index< numbers.size(); index++){
             if (search.equalsIgnoreCase(numbers.get(index))){
                 System.out.println("Name: " + names.get(index) + "\t\tNumber: " + numbers.get(index));
                 isInContact = true;
@@ -55,6 +56,13 @@ public class PhoneBook {
 
         if (!isInContact) {
             System.out.println("Contact not found in Contact List");
+        }
+    }
+
+    public void deleteAContact(int number) {
+        for (int index = 0; index< names.size(); index++){
+            names.remove(number - 1);
+            numbers.remove(number - 1);
         }
     }
 
@@ -112,12 +120,24 @@ public class PhoneBook {
                     break;
 
                 case 4:
+                    if (names.isEmpty()) {
+                        System.out.println("No contact to delete");
+                    } else {
+                        System.out.print("Enter the number of contact you want to delete: ");
+                        int delete = input.nextInt();
+                        deleteAContact(delete);
+                        System.out.println("Contact Deleted Successfully");
+                    }
+                    break;
+
+                case 5:
                     System.out.println("Goodbye!!!");
+                    break;
 
                 default:
                     System.out.println("You entered a wrong input");
                     break;
             }
-        } while (option != 4);
+        } while (option != 5);
     }
 }
